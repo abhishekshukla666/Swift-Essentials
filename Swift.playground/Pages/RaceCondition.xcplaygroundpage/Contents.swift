@@ -2,29 +2,49 @@
 
 import Foundation
 
-let customQueue = DispatchQueue(label: "CustomQueue", attributes: [.concurrent])
-let semaphore = DispatchSemaphore(value: 1)
-var totalTickets = 10
+struct Ticket {
+    let key: Int
+    let value: String
+}
 
-let tickets = [2:"A", 3:"B", 5:"C", 4:"D"]
-
-func bookTicket() {
-    customQueue.async {
+class RaceConditionDemo {
+    let customQueue = DispatchQueue(label: "CustomQueue", attributes: [.concurrent])
+    let semaphore   = DispatchSemaphore(value: 1)
+    
+    private(set) var totalTickets = 5
+    
+    func buyTicket(_ tickets: [Ticket]) {
         for ticket in tickets {
-//            semaphore.wait()
-            sleep(1)
-            if totalTickets >= ticket.key {
-                totalTickets -= ticket.key
-                debugPrint("Ticket booked for \(ticket.value)")
+            customQueue.async {
+                self.bookTicket(ticket)
             }
-//            semaphore.signal()
         }
+    }
+    
+    func bookTicket(_ ticket: Ticket) {
+        semaphore.wait()
+        debugPrint("Started booking for \(ticket.value)")
+        sleep(1)
+        if totalTickets >= ticket.key {
+            totalTickets -= ticket.key
+            debugPrint("Sucessfull, Ticket booked for \(ticket.value)")
+        } else {
+            debugPrint("Unsuccessfull, Ticket not booked for \(ticket.value)")
+        }
+        semaphore.signal()
+    }
+    
+    func doSomeOtherStuff() {
+        debugPrint("Do some other stuff")
     }
 }
 
-func doSomeOtherStuff() {
-    debugPrint("Do some other stuff")
-}
-
-bookTicket()
-doSomeOtherStuff()
+let rcDemo = RaceConditionDemo()
+let tickets = [
+    Ticket(key: 3, value: "A"),
+    Ticket(key: 2, value: "B"),
+    Ticket(key: 4, value: "C"),
+    Ticket(key: 2, value: "D")
+]
+rcDemo.buyTicket(tickets)
+rcDemo.doSomeOtherStuff()

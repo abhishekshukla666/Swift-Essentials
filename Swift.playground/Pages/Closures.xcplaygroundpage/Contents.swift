@@ -1,24 +1,4 @@
 
-/* Closure - Retain Cycle */
-//class River {
-//    var name = "Ganga"
-//    var closure: (() -> Void)?
-//    
-//    init() {
-//        closure = { [weak self] in
-//            debugPrint("init with \(self?.name)")
-//        }
-//    }
-//    
-//    deinit {
-//        debugPrint("deinit")
-//    }
-//}
-
-//var ganga: River? = River()
-////ganga?.closure?()
-//ganga = nil
-
 /*
 func sumFunction(_ a: Int, _ b: Int) -> Int {
     return a + b
@@ -110,11 +90,16 @@ let hello = {
 }
 
 /* Closure with param */
-let goodMorning = {(name: String) in
+let goodMorning: ((String) -> Void) = {(name) in
     print("Good morning \(name)")
 }
 
 /* Closure with return type */
+/*
+ let addTwoNumbers: ((Int, Int) -> Int) = {(num1, num2) in
+     return num1 + num2
+ }
+ */
 let addTwoNumbers = {(num1: Int, num2: Int) -> Int in
     return num1 + num2
 }
@@ -123,7 +108,6 @@ let addTwoNumbers = {(num1: Int, num2: Int) -> Int in
 hello()
 goodMorning("abhishek")
 addTwoNumbers(5, 7)
-
 
 func addition() -> (Int) -> Int {
     var sum = 0
@@ -150,15 +134,78 @@ count += 1
 closure1("heelo")
 */
 
-func addUpEvenNumbersInArray(array: [Int], output: @escaping (Int) -> Void) {
-    let sum = array.filter { $0 % 2 == 0 }.reduce(0, +)
-    output(sum)
+//func addUpEvenNumbersInArray(array: [Int], output: @escaping (Int) -> Void) {
+//    let sum = array.filter { $0 % 2 == 0 }.reduce(0, +)
+//    output(sum)
+//}
+//
+//let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+//addUpEvenNumbersInArray(array: array) { sum in
+//    print("The sum of even numbers is \(sum).")
+//}
+
+
+/*
+class ViewModel {
+    var dataUpdate: ((Int) -> Void)?
+    func getData() {
+        print("getdata")
+        dataUpdate?(1)
+    }
 }
 
-let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-addUpEvenNumbersInArray(array: array) { sum in
-    print("The sum of even numbers is \(sum).")
+class ViewController {
+    var vm: ViewModel = ViewModel()
+    
+    func setup() {
+        vm.dataUpdate = { [weak self] (value: Int) in
+            guard let self = self else { return }
+            print(value)
+        }
+        vm.getData()
+    }
 }
 
+let vc = ViewController()
+vc.setup()
+ */
 
+/* 
+ --- Closure Retain Cycle ---
+ 
+class River {
+    let name: String
+    var closure: (() -> ())?
+    init(name: String) {
+        self.name = name
+        closure = {
+            print("\(self.name) river init()")
+        }
+    }
+    
+    deinit {
+        print("\(name) river deinit()")
+    }
+}
 
+var ganga: River? = River(name: "Ganga")
+ganga?.closure?()
+ganga = nil
+*/
+
+var value = 1
+
+let closure1 = { [value] in
+    print("Closure1: ", value)
+}
+
+let closure2 = {
+    print("Closure2: ", value)
+}
+
+value += 1
+
+print("Last", value)
+
+closure1()
+closure2()

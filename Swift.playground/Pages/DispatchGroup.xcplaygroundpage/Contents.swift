@@ -2,12 +2,12 @@
 import Foundation
 
 let customQueue = DispatchQueue(
-    label: "com.serial.queue"
-//    attributes: [.concurrent]
+    label: "com.custom.queue",
+    attributes: [.concurrent]
 )
 print("start")
 customQueue.sync {
-    customQueue.async {
+    customQueue.sync {
         for n in 1...10 {
             print(n)
         }

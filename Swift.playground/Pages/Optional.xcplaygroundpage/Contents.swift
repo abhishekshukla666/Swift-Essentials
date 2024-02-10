@@ -33,3 +33,18 @@ debugPrint(string3) // print: Optional("Yamuna")
 //withUnsafePointer(to: &string3) { pointer in
 //    debugPrint(pointer)
 //}
+
+
+enum MyOptional<T> {
+    case Optional(T), Nil
+    
+    func unwrap() -> T {
+        switch(self) {
+        case .Optional(let T): return T
+        case .Nil: fatalError("error while unwraping optional")
+        }
+    }
+}
+
+let ten = MyOptional<Any>.Nil
+print(ten)

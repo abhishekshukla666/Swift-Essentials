@@ -22,5 +22,8 @@
         <page name='Decorator_Design_Pattern'/>
         <page name='FactoryMethod_Desgin_Pattern'/>
         <page name='Arrays'/>
+        <page name='Enums'/>
+        <page name='CustomNotificationCenter'/>
+        <page name='CustomNotificationCenterPractice'/>
     </pages>
 </playground>
