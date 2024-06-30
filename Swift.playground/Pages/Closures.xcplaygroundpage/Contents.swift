@@ -85,14 +85,14 @@ print("Finished")
 */
 
 /* Simple Closure */
-let hello = {
-    print("Hello Closure")
-}
+//let hello = {
+//    print("Hello Closure")
+//}
 
 /* Closure with param */
-let goodMorning: ((String) -> Void) = {(name) in
-    print("Good morning \(name)")
-}
+//let goodMorning: ((String) -> Void) = {(name) in
+//    print("Good morning \(name)")
+//}
 
 /* Closure with return type */
 /*
@@ -100,9 +100,9 @@ let goodMorning: ((String) -> Void) = {(name) in
      return num1 + num2
  }
  */
-let addTwoNumbers = {(num1: Int, num2: Int) -> Int in
-    return num1 + num2
-}
+//let addTwoNumbers = {(num1: Int, num2: Int) -> Int in
+//    return num1 + num2
+//}
 
 /*
 hello()
@@ -193,19 +193,54 @@ ganga?.closure?()
 ganga = nil
 */
 
-var value = 1
+//var value = 1
+//
+//let closure1 = { [value] in
+//    print("Closure1: ", value)
+//}
+//
+//let closure2 = {
+//    print("Closure2: ", value)
+//}
+//
+//value += 1
+//
+//print("Last", value)
+//
+//closure1()
+//closure2()
 
-let closure1 = { [value] in
-    print("Closure1: ", value)
+
+func acceptClosure(completion: ((Int) -> Bool)) {
+    // func body
+    print("Called")
+    completion(3)
 }
 
-let closure2 = {
-    print("Closure2: ", value)
+/* Without trailing closure */
+acceptClosure(completion: { num in
+    print(num == 4)
+    return num == 4
+})
+
+/* With Trailing Closure */
+acceptClosure { num in
+    print(num == 3)
+    return num == 3
 }
 
-value += 1
 
-print("Last", value)
-
-closure1()
-closure2()
+//func getNum() -> Int {
+//    print("getnum")
+//    return 5
+//}
+//
+//func getNumC(num: Int, _ result: () -> Bool) {
+////    print(result())
+//    print("inside getnum clousere")
+//}
+//
+//getNumC(num: 4) {
+//    print("inside closure")
+//    return getNum() == 5
+//}
