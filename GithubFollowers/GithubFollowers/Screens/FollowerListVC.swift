@@ -37,9 +37,9 @@ class FollowerListVC: UIViewController {
             guard let self = self, let isLoading = isLoading else { return }
             DispatchQueue.main.async {
                 if isLoading {
-//                    self.showLoadingView()
+                    self.showLoadingView()
                 } else {
-//                    self.hideLoadingView()
+                    self.hideLoadingView()
                 }
             }
         }

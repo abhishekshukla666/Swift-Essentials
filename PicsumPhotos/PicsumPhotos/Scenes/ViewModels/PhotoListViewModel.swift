@@ -7,13 +7,13 @@
 
 import Foundation
 
-//protocol PhotoViewModelOutput: AnyObject {
-//    func returnPhotoModel(with value: [Photo])
-//    func showError(with error: String)
-//}
+protocol PhotoViewModelOutput: AnyObject {
+    func returnPhotoModel(with value: [Photo])
+    func showError(with error: String)
+}
 
 protocol PhotoViewModelProcol {
-//    var output: PhotoViewModelOutput? { get set }
+    var output: PhotoViewModelOutput? { get set }
     
     func getPhotoImage(with url: String)
 }
@@ -21,7 +21,7 @@ protocol PhotoViewModelProcol {
 class PhotoListViewModel: PhotoViewModelProcol {
     
     private var httpClient: HttpClientProtocol
-//    weak var output: PhotoViewModelOutput?
+    weak var output: PhotoViewModelOutput?
     
     init(httpClient: HttpClientProtocol) {
         self.httpClient = httpClient
@@ -32,7 +32,7 @@ class PhotoListViewModel: PhotoViewModelProcol {
     func getPhotoImage(with url: String) {
         
         guard let url = URL(string: url) else {
-//            self.output?.showError(with: PPError.urlNotValid.localizedDescription)
+            self.output?.showError(with: PPError.urlNotValid.localizedDescription)
             return
         }
         
@@ -42,7 +42,7 @@ class PhotoListViewModel: PhotoViewModelProcol {
             case .success(let photoModel):
                 self?.photoModel.value = photoModel
             case .failure(let error): break
-//                self?.output?.showError(with: error.localizedDescription)
+                self?.output?.showError(with: error.localizedDescription)
             }
         }
     }

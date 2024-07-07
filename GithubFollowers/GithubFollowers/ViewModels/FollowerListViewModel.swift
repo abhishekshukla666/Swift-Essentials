@@ -14,9 +14,7 @@ class FollowerListViewModel {
     var followers: Observable<[Follower]> = Observable<[Follower]>()
     
     func getFollowers(username: String, page: Int) {
-        if isLoading.value ?? false {
-            return
-        }
+        if isLoading.value ?? false { return }
         isLoading.value = true
         NetworkManager.shared.getFollowers(for: username, page: page) { [weak self] result in
             guard let self = self else { return }

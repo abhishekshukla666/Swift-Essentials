@@ -11,9 +11,7 @@ class Observable<T> {
     
     var value: T? {
         didSet {
-            DispatchQueue.main.async {
-                self.listener?(self.value)
-            }
+            self.listener?(self.value)
         }
     }
     
