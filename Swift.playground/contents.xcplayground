@@ -25,6 +25,7 @@
         <page name='Enums'/>
         <page name='CustomNotificationCenter'/>
         <page name='CustomNotificationCenterPractice'/>
-        <page name='Bindable'/>
+        <page name='Observable'/>
+        <page name='Property Wrapper'/>
     </pages>
 </playground>

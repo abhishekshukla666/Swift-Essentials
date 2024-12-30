@@ -30,3 +30,6 @@ for _ in 1...100 {
         print(arrayObject.readVal())
     }
 }
+
+let string = ["1", "2", "3", "4", "5"]
+print(string[2...3])
